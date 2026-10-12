@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results | AQW Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="wilted rose.png" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="results.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell results-shell">
+      <nav class="section-nav" aria-label="Calculator sections">
+        <a class="active" href="index.html" aria-current="page">Combat Stats</a>
+        <a href="damage.html">Damage</a>
+      </nav>
+
+      <header class="app-header">
+        <p class="eyebrow"><span></span> Build report</p>
+        <h1>Your Combat <span>Stats</span></h1>
+        <p class="app-description" id="result-summary">Crunching the numbers...</p>
+      </header>
+
+      <section class="results-grid" id="results-grid" aria-label="Calculated combat stats"></section>
+
+      <section class="empty-state" id="empty-state" hidden>
+        <p>No results to show yet. Head back and cook up a build first.</p>
+      </section>
+
+      <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to calculator</a>
+    </main>
+    <footer class="app-footer">
+      <p>
+        vibe coded by <a href="https://github.com/0mato" target="_blank" rel="noopener noreferrer">2mato</a>
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Damage Calculator | AQW Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="wilted rose.png" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="damage.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell damage-shell">
+      <nav class="section-nav" aria-label="Calculator sections">
+        <a href="index.html">Combat Stats</a>
+        <a class="active" href="damage.html" aria-current="page">Damage</a>
+      </nav>
+
+      <header class="app-header">
+        <p class="eyebrow"><span></span> Damage lab</p>
+        <h1>Damage <span>Calculator</span></h1>
+        <p class="app-description">Set up an attack and its damage modifiers.</p>
+      </header>
+
+      <form class="damage-form" id="damage-form">
+        <fieldset>
+          <legend>Attack</legend>
+          <div class="damage-grid">
+            <div class="field">
+              <label for="damage-type">Damage type</label>
+              <select id="damage-type" name="damageType">
+                <option value="physical">Physical (or Hybrid)</option>
+                <option value="magical">Magical</option>
+                <option value="true">True</option>
+                <option value="dot">DoT </option>
+              </select>
+            </div>
+            <div class="field" id="damage-formula-field">
+              <label for="damage-formula">Skill formula</label>
+              <select id="damage-formula" name="damageFormula">
+                <option value="AP1">AP1</option>
+                <option value="AP2">AP2</option>
+                <option value="SP1">SP1</option>
+                <option value="SP2">SP2</option>
+                <option value="APSP1">APSP1</option>
+                <option value="APSP2">APSP2</option>
+              </select>
+            </div>
+            <div class="field" id="dot-function-type-field" hidden>
+              <label for="dot-function-type">DoT Function</label>
+              <select id="dot-function-type" name="dotFunctionType">
+                <option value="AP1">AP1</option>
+                <option value="AP2">AP2</option>
+                <option value="SP1">SP1</option>
+                <option value="SP2">SP2</option>
+                <option value="hp">HP%</option>
+                <option value="fixed">Fixed Number</option>
+              </select>
+            </div>
+            <div class="field" id="weapon-dps-field">
+              <label for="weapon-dps">Weapon DPS <span class="optional">Optional; defaults to 85</span></label>
+              <input type="number" id="weapon-dps" name="weaponDps" min="0" step="any" placeholder="85" />
+            </div>
+            <div class="field" id="attack-power-field">
+              <label for="attack-power">Attack Power</label>
+              <input type="number" id="attack-power" name="attackPower" min="0" step="any" placeholder="0" required />
+            </div>
+            <div class="field" id="spell-power-field">
+              <label for="spell-power">Spell Power</label>
+              <input type="number" id="spell-power" name="spellPower" min="0" step="any" placeholder="0" required />
+            </div>
+            <div class="field" id="coefficient-field">
+              <label for="coefficient">Coefficient</label>
+              <input type="number" id="coefficient" name="coefficient" step="any" placeholder="0" required />
+            </div>
+            <div class="field" id="dot-attack-power-field" hidden>
+              <label for="dot-attack-power">Attack Power</label>
+              <input type="number" id="dot-attack-power" name="dotAttackPower" min="0" step="any" placeholder="0" />
+            </div>
+            <div class="field" id="dot-spell-power-field" hidden>
+              <label for="dot-spell-power">Spell Power</label>
+              <input type="number" id="dot-spell-power" name="dotSpellPower" min="0" step="any" placeholder="0" />
+            </div>
+            <div class="field" id="dot-max-hp-field" hidden>
+              <label for="dot-max-hp">Max HP</label>
+              <input type="number" id="dot-max-hp" name="dotMaxHp" min="0" step="any" placeholder="0" />
+            </div>
+            <div class="field" id="dot-fixed-number-field" hidden>
+              <label for="dot-fixed-number">Fixed Number</label>
+              <input type="number" id="dot-fixed-number" name="dotFixedNumber" step="any" placeholder="0" />
+            </div>
+            <div class="field" id="dot-duration-field" hidden>
+              <label for="dot-duration">Aura Duration <span class="unit-label">seconds</span></label>
+              <input type="number" id="dot-duration" name="dotDuration" min="1" step="any" placeholder="0" />
+            </div>
+            <div class="field" id="dot-seconds-per-tick-field" hidden>
+              <label for="dot-seconds-per-tick">Seconds per Tick</label>
+              <input type="number" id="dot-seconds-per-tick" name="dotSecondsPerTick" min="1" step="any" placeholder="1" />
+            </div>
+            <div class="field" id="dot-max-stacks-field" hidden>
+              <label for="dot-max-stacks">Aura Max Stacks</label>
+              <input type="number" id="dot-max-stacks" name="dotMaxStacks" min="1" step="1" value="1" />
+            </div>
+            <div class="field" id="dot-current-stacks-field" hidden>
+              <label for="dot-current-stacks">Current Stacks <span class="optional">Optional; defaults to 1</span></label>
+              <input type="number" id="dot-current-stacks" name="dotCurrentStacks" min="1" step="1" value="1" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset id="damage-modifiers-fieldset">
+          <legend>Damage modifiers</legend>
+          <div class="damage-grid" id="standard-damage-modifiers">
+            <div class="field" id="crit-multiplier-field">
+              <label for="crit-multiplier">Crit Multiplier <span class="unit-label">×</span></label>
+              <input type="number" id="crit-multiplier" name="critMultiplier" min="0" step="any" placeholder="1.5" required />
+            </div>
+            <div class="field" id="weapon-boost-field">
+              <label for="weapon-boost">Weapon Gear Boost <span class="unit-label">×</span></label>
+              <input type="number" id="weapon-boost" name="weaponBoost" step="any" value="1" />
+            </div>
+            <div class="field" id="armor-boost-field">
+              <label for="armor-boost">Armor Gear Boost <span class="unit-label">×</span></label>
+              <input type="number" id="armor-boost" name="armorBoost" step="any" value="1" />
+            </div>
+            <div class="field" id="all-out-field">
+              <label for="all-out">All Out <span class="unit-label">×</span></label>
+              <input type="number" id="all-out" name="allOut" step="any" value="1" />
+            </div>
+            <div class="field" id="phys-out-field">
+              <label for="phys-out">Phys Out <span class="unit-label">×</span></label>
+              <input type="number" id="phys-out" name="physOut" step="any" value="1" />
+            </div>
+            <div class="field" id="mag-out-field" hidden>
+              <label for="mag-out">Mag Out <span class="unit-label">×</span></label>
+              <input type="number" id="mag-out" name="magOut" step="any" value="1" />
+            </div>
+          </div>
+          <div class="damage-modifier-group" id="dot-static-group" hidden>
+            <h3>Snapshotted stats</h3>
+            <div class="damage-grid">
+              <div class="field">
+                <label for="dot-static-all-out">Static All Out <span class="unit-label">×</span></label>
+                <input type="number" id="dot-static-all-out" name="dotStaticAllOut" step="any" value="1" />
+              </div>
+              <div class="field">
+                <label for="dot-out">Static DoT Out <span class="unit-label">×</span></label>
+                <input type="number" id="dot-out" name="dotOut" step="any" value="1" />
+              </div>
+            </div>
+          </div>
+          <div class="damage-modifier-group" id="dot-dynamic-group" hidden>
+            <h3>Dynamic modifiers for each tick</h3>
+            <div class="damage-grid">
+              <div class="field">
+                <label for="dot-dynamic-all-out">Dynamic All Out <span class="unit-label">×</span></label>
+                <input type="number" id="dot-dynamic-all-out" name="dotDynamicAllOut" step="any" value="1" />
+              </div>
+              <div class="field">
+                <label for="dot-mag-out">Mag Out <span class="unit-label">×</span></label>
+                <input type="number" id="dot-mag-out" name="dotMagOut" step="any" value="1" />
+              </div>
+            </div>
+          </div>
+          <p class="damage-type-note" id="healing-sign-note">A negative coefficient automatically indicates healing; no separate heal selection is needed.</p>
+          <p class="damage-type-note" id="damage-modifier-help">Enter modifiers as multipliers (for example, 1.25 means 25% more damage). A value of 1 is neutral. Weapon and Armor Gear Boosts multiply together for Physical and Magical damage.</p>
+          <p class="damage-type-note" id="damage-type-note" aria-live="polite"></p>
+        </fieldset>
+
+        <fieldset id="enemy-defenses-fieldset">
+          <legend>Enemy defenses</legend>
+          <div class="damage-grid">
+            <div class="field" id="phys-in-field">
+              <label for="phys-in">Phys In <span class="unit-label">×</span></label>
+              <input type="number" id="phys-in" name="physIn" step="any" value="1" />
+            </div>
+            <div class="field" id="mag-in-field" hidden>
+              <label for="mag-in">Mag In <span class="unit-label">×</span></label>
+              <input type="number" id="mag-in" name="magIn" step="any" value="1" />
+            </div>
+            <div class="field" id="all-in-field">
+              <label for="all-in">All In <span class="unit-label">×</span></label>
+              <input type="number" id="all-in" name="allIn" step="any" value="1" />
+            </div>
+            <div class="field" id="dot-in-field" hidden>
+              <label for="dot-in">DoT In <span class="unit-label">×</span></label>
+              <input type="number" id="dot-in" name="dotIn" step="any" value="1" />
+            </div>
+            <div class="field" id="dot-all-in-field" hidden>
+              <label for="dot-all-in">All In <span class="unit-label">×</span></label>
+              <input type="number" id="dot-all-in" name="dotAllIn" step="any" value="1" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset id="healing-modifiers-fieldset" hidden>
+          <legend>Healing modifiers</legend>
+          <div class="damage-grid">
+            <div class="field">
+              <label for="heal-in">Heal In <span class="unit-label">×</span></label>
+              <input type="number" id="heal-in" name="healIn" step="any" value="1" />
+            </div>
+            <div class="field">
+              <label for="heal-out">Heal Out <span class="unit-label">×</span></label>
+              <input type="number" id="heal-out" name="healOut" step="any" value="1" />
+            </div>
+          </div>
+        </fieldset>
+
+        <button type="submit"><span>crank that soulja boy</span><span aria-hidden="true">→</span></button>
+      </form>
+
+      <section class="damage-result" id="damage-result" aria-live="polite" hidden>
+        <p class="damage-result-label" id="damage-result-label"></p>
+        <div class="damage-result-values">
+          <div class="damage-result-item">
+            <p class="damage-result-kind" id="damage-result-non-crit-label">Non-Crit</p>
+            <p class="damage-result-value" id="damage-result-non-crit"></p>
+          </div>
+          <div class="damage-result-item" id="damage-result-crit-item">
+            <p class="damage-result-kind">Crit</p>
+            <p class="damage-result-value" id="damage-result-crit"></p>
+          </div>
+        </div>
+        <p class="damage-rounding-warning">note: rounding in aqw is gay so this may be slightly off</p>
+      </section>
+      <section class="damage-formula-note" id="dot-formula-note" aria-live="polite" hidden>
+        <p><strong id="pending-formula-title"></strong> <span id="pending-formula-description"></span></p>
+      </section>
+    </main>
+    <footer class="app-footer">
+      <p>
+        vibe coded by <a href="https://github.com/0mato" target="_blank" rel="noopener noreferrer">2mato</a>
+      </p>
+    </footer>
+  </body>
+</html>

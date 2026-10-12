@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Combat Stats | AQW Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="wilted rose.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <nav class="section-nav" aria-label="Calculator sections">
+        <a class="active" href="index.html" aria-current="page">Combat Stats</a>
+        <a href="damage.html">Damage</a>
+      </nav>
+
+      <header class="app-header">
+        <p class="eyebrow"><span></span> Nerd.</p>
+        <h1>Combat Stats <span>Calculator</span></h1>
+        <p class="app-description">numba go in</p>
+      </header>
+
+      <form id="stats-form">
+        <fieldset class="player-section">
+          <legend>Player</legend>
+
+          <div class="field">
+            <label for="playerLvl">Player level <span class="optional">Optional</span></label>
+            <input type="number" id="playerLvl" name="playerLvl" min="1" step="1" placeholder="100" />
+          </div>
+
+          <div class="field">
+            <label for="stat-model">Class stat model</label>
+            <select id="stat-model" name="statModel">
+              <option value="meleeTank">Tank Melee</option>
+              <option value="meleeDodge">Dodge Melee</option>
+              <option value="meleePower">Power Melee</option>
+              <option value="casterOffensive">Offensive Caster</option>
+              <option value="casterDefensive">Defensive Caster</option>
+              <option value="casterPower">Power Caster</option>
+              <option value="hybridFull">Full Hybrid</option>
+              <option value="hybridLuck">Luck Hybrid</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset class="core-section">
+          <legend>Core Stats</legend>
+          <div class="stats-grid">
+            <div class="field">
+              <label for="str">Strength</label>
+              <input type="number" step="any" id="str" name="str" placeholder="0" />
+            </div>
+            <div class="field">
+              <label for="int">Intelligence</label>
+              <input type="number" step="any" id="int" name="int" placeholder="0" />
+            </div>
+            <div class="field">
+              <label for="dex">Dexterity</label>
+              <input type="number" step="any" id="dex" name="dex" placeholder="0" />
+            </div>
+            <div class="field">
+              <label for="end">Endurance</label>
+              <input type="number" step="any" id="end" name="end" placeholder="0" />
+            </div>
+            <div class="field">
+              <label for="wis">Wisdom</label>
+              <input type="number" step="any" id="wis" name="wis" placeholder="0" />
+            </div>
+            <div class="field">
+              <label for="luck">Luck</label>
+              <input type="number" step="any" id="luck" name="luck" placeholder="0" />
+            </div>
+          </div>
+        </fieldset>
+
+        <button type="submit"><span>cook ts gpt</span><span aria-hidden="true">:fire:</span></button>
+      </form>
+    </main>
+    <script src="app.js" defer></script>
+    <footer class="app-footer">
+      <p>
+        vibe coded by <a href="https://github.com/0mato" target="_blank" rel="noopener noreferrer">2mato</a>
+      </p>
+    </footer>
+  </body>
+</html>
