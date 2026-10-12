@@ -1,1 +1,1 @@
-A calculator designed for AdventureQuest Worlds. Vibe coded and designed to not be as much of a headache as possible.
+placeholder text - maybe i'll update this someday to teach you how to use the calculator lol
